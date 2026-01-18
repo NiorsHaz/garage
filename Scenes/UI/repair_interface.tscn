@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx0m2t4wm4nh0"]
+
+[ext_resource type="Script" uid="uid://dblh3spf1bejg" path="res://Script/UI/repair_interface.gd" id="1_2khow"]
+[ext_resource type="PackedScene" uid="uid://duc4pqd1fj4dj" path="res://Scenes/UI/repair_part.tscn" id="2_xsrj8"]
+
+[node name="Repair_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 192.0
+offset_top = 66.0
+offset_right = 192.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+script = ExtResource("1_2khow")
+
+[node name="List" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -192.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Repair" parent="List" instance=ExtResource("2_xsrj8")]
+layout_mode = 2

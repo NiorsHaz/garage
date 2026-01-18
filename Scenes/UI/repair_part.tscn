@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://duc4pqd1fj4dj"]
+
+[ext_resource type="Script" uid="uid://bh4fu6pa5xgms" path="res://Script/UI/repair_part.gd" id="1_a3gp3"]
+
+[node name="Repair" type="VBoxContainer"]
+alignment = 1
+script = ExtResource("1_a3gp3")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

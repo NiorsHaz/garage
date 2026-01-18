@@ -1,6 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://nfe8kf1t8c18"]
+[gd_scene load_steps=4 format=3 uid="uid://nfe8kf1t8c18"]
 
 [ext_resource type="Script" uid="uid://cl1hhtglqlwud" path="res://Script/Level/test.gd" id="1_l3ice"]
+[ext_resource type="PackedScene" uid="uid://cce4lladx7266" path="res://Scenes/Entity/player.tscn" id="2_2bgww"]
+[ext_resource type="PackedScene" uid="uid://cx0m2t4wm4nh0" path="res://Scenes/UI/repair_interface.tscn" id="3_rqmci"]
 
-[node name="Test" type="Node2D"]
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_l3ice")
+
+[node name="Player" parent="." instance=ExtResource("2_2bgww")]
+position = Vector2(465, 295)
+
+[node name="Repair_UI" parent="." instance=ExtResource("3_rqmci")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
