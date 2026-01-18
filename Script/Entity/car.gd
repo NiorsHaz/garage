@@ -7,7 +7,7 @@ extends StaticBody2D
 
 var data: CarData
 var repair_points: Array[String] = []
-
+var finished_parts: Array[String] = []
 @export var base_time_per_part: float = 2.0
 
 # Repair state
@@ -92,16 +92,21 @@ func _process(delta: float) -> void:
 
 	if repair_progress >= 1.0:
 		_finish_repair()
+	
 
 
 func _finish_repair() -> void:
 	is_repairing = false
 	repair_points.erase(current_part)
 
+	finished_parts.append(current_part)
 	emit_signal("repair_finished", current_part)
 
 	current_part = ""
 	repair_progress = 0.0
+	
+	if repair_points == []:
+		print(self.name + " is totally repaired")
 
 # =========================
 # AGGREGATE CALCULATIONS

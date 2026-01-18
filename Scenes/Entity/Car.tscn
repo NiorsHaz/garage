@@ -9,6 +9,7 @@ size = Vector2(20, 11)
 size = Vector2(20, 10)
 
 [node name="Car" type="StaticBody2D"]
+scale = Vector2(3.7419424, 3.7419424)
 script = ExtResource("1_6oe7e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
