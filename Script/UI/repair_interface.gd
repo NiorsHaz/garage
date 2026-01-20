@@ -10,18 +10,24 @@ var current_car: Car
 signal selected_part(part: String, car: Car)
 
 func open_for_car(car: Car) -> void:
-	if car.repair_points != []:
-		visible = true
-		current_car = car
-		clear_list()
-		items.clear()
+	visible = true
+	current_car = car
+	clear_list()
+	items.clear()
 
-		for part in car.repair_points:
-			var item = repair_item_scene.instantiate()
-			list.add_child(item)
-			item.setup(part)
-			item.connect("part_selected", start_repair_for)
-			items[part] = item
+	for part in car.repair_points:
+		var item = repair_item_scene.instantiate()
+		list.add_child(item)
+		item.setup(part)
+		item.connect("part_selected", start_repair_for)
+		items[part] = item
+	
+	for finished in car.finished_parts:
+		var finished_item = repair_item_scene.instantiate()
+		list.add_child(finished_item)
+		finished_item.finished(finished)
+		#finished_item.connect("part_selected", start_repair_for)
+		items[finished] = finished_item
 
 func clear_list():
 	for child in list.get_children():

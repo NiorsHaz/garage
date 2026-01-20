@@ -14,6 +14,11 @@ func setup(part: String) -> void:
 	progress.value = 0
 	button.disabled = false
 
+func finished(part: String) -> void:
+	part_name = part
+	button.text = part
+	progress.value = 100
+	button.disabled = true
 
 func set_progress(value: float) -> void:
 	progress.value = clamp(value * 100.0, 0, 100)
