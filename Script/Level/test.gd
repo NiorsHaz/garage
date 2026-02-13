@@ -11,8 +11,8 @@ var active_car: Car = null
 
 
 func _ready() -> void:
-	repair_ui.connect("selected_part", _on_repair_part_selected)
-	player.interact_car.connect(_on_player_interact_car)
+	#repair_ui.connect("selected_part", _on_repair_part_selected)
+	player.repair_part.connect(_on_repair_part_selected)
 
 	var car: Car = car_scene.instantiate()
 	var car1: Car = car_scene.instantiate()
@@ -31,33 +31,6 @@ func _ready() -> void:
 
 	cars.append(car)
 	cars.append(car1)
-
-
-func _on_player_interact_car(car: Car) -> void:
-	# If switching cars
-	if active_car and active_car != car:
-		if active_car.is_connected("repair_progressed", _on_car_repair_progress):
-			active_car.disconnect("repair_progressed", _on_car_repair_progress)
-			active_car.disconnect("repair_finished", _on_car_repair_finished)
-
-		#active_car.cancel_repair()
-
-	active_car = car
-	repair_ui.open_for_car(car)
-
-
+#
 func _on_repair_part_selected(part: String, car: Car) -> void:
-
-	if not car.is_connected("repair_progressed", _on_car_repair_progress):
-		car.connect("repair_progressed", _on_car_repair_progress)
-		car.connect("repair_finished", _on_car_repair_finished)
-
 	car.start_repair(part)
-
-
-func _on_car_repair_progress(part: String, progress: float) -> void:
-	repair_ui.update_part_progress(part, progress)
-
-
-func _on_car_repair_finished(part: String) -> void:
-	repair_ui.finish_part(part)

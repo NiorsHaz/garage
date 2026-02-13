@@ -1,12 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://cce4lladx7266"]
+[gd_scene load_steps=9 format=3 uid="uid://cce4lladx7266"]
 
 [ext_resource type="Script" uid="uid://bbohnt8e3yvbe" path="res://Script/Entity/player.gd" id="1_re1fo"]
+[ext_resource type="Texture2D" uid="uid://03g4nww3e6lf" path="res://Assets/Player/Garagist.png" id="2_odi8b"]
+[ext_resource type="PackedScene" uid="uid://cx0m2t4wm4nh0" path="res://Scenes/UI/repair_interface.tscn" id="3_2tr3c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vbrag"]
 height = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_re1fo"]
 radius = 45.044422
+
+[sub_resource type="Animation" id="Animation_2tr3c"]
+resource_name = "walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.43333334, 0.73333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.17453292, -0.17453292, 0.17453292, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.43333334, 0.73333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-2.9802322e-08, 14.000001), Vector2(-2.9802322e-08, 14.000001), Vector2(-2.9802322e-08, 13), Vector2(-2.9802322e-08, 14.000001), Vector2(-2.9802322e-08, 14.000001)]
+}
+
+[sub_resource type="Animation" id="Animation_hw5wg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.17453292]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2.9802322e-08, 14.000001)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hw5wg"]
+_data = {
+&"RESET": SubResource("Animation_hw5wg"),
+&"walk": SubResource("Animation_2tr3c")
+}
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_re1fo")
@@ -15,6 +77,7 @@ script = ExtResource("1_re1fo")
 shape = SubResource("CapsuleShape2D_vbrag")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -27,11 +90,36 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2.9802322e-08, 14.000001)
+rotation = 0.17453292
+texture = ExtResource("2_odi8b")
+offset = Vector2(0.240309, -23.738377)
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_re1fo")
 debug_color = Color(0, 0.63857085, 0.38177732, 0.41960785)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="Repair_UI" parent="." instance=ExtResource("3_2tr3c")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -216.0
+offset_right = 384.0
+offset_bottom = 215.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hw5wg")
+}
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

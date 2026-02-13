@@ -10,10 +10,13 @@ var repair_points: Array[String] = []
 var finished_parts: Array[String] = []
 @export var base_time_per_part: float = 2.0
 
+
 # Repair state
 var current_part: String = ""
 var repair_progress: float = 0.0
 var is_repairing: bool = false
+var is_repaired: bool = false
+
 
 # =========================
 # SIGNALS
@@ -82,6 +85,9 @@ func cancel_repair() -> void:
 # =========================
 
 func _process(delta: float) -> void:
+	if !$AnimationPlayer.is_playing() && is_repairing:
+		$AnimationPlayer.play("Loop")
+	
 	if not is_repairing:
 		return
 
@@ -92,7 +98,6 @@ func _process(delta: float) -> void:
 
 	if repair_progress >= 1.0:
 		_finish_repair()
-	
 
 
 func _finish_repair() -> void:
@@ -106,6 +111,7 @@ func _finish_repair() -> void:
 	repair_progress = 0.0
 	
 	if repair_points == []:
+		is_repaired = true
 		print(self.name + " is totally repaired")
 
 # =========================
